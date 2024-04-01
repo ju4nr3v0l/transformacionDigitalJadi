@@ -26,71 +26,6 @@
             </div>
             <div class="stepwizard-step">
                 <a href="#step-5" type="button" class="btn btn-circle {{ $currentStep != 4 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">5</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-6" type="button" class="btn btn-circle {{ $currentStep != 5 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">6</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-7" type="button" class="btn btn-circle {{ $currentStep != 6 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">7</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-8" type="button" class="btn btn-circle {{ $currentStep != 7 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">8</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-9" type="button" class="btn btn-circle {{ $currentStep != 8 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">9</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-10" type="button" class="btn btn-circle {{ $currentStep != 9 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">10</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-11" type="button" class="btn btn-circle {{ $currentStep != 10 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">11</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-12" type="button" class="btn btn-circle {{ $currentStep != 11 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">12</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-13" type="button" class="btn btn-circle {{ $currentStep != 12 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">13</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-14" type="button" class="btn btn-circle {{ $currentStep != 13 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">14</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-15" type="button" class="btn btn-circle {{ $currentStep != 14 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">15</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-16" type="button" class="btn btn-circle {{ $currentStep != 15 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">16</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-17" type="button" class="btn btn-circle {{ $currentStep != 16 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">17</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-18" type="button" class="btn btn-circle {{ $currentStep != 17 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">18</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-19" type="button" class="btn btn-circle {{ $currentStep != 18 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">19</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-20" type="button" class="btn btn-circle {{ $currentStep != 19 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">20</a>
-
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-21" type="button" class="btn btn-circle {{ $currentStep != 20 ? 'btn-default' : 'btn-primary' }}" disabled="disabled">21</a>
-               
             </div>
         </div>
     </div>
@@ -135,7 +70,7 @@
                     @error('cargo') <span class="error">{{ $message }}</span> @enderror
                 </div>
 
-                <button class="btn btn-primary nextBtn btn-lg pull-right" wire:click="ceroStepSubmit" type="button" >Continuar</button>
+                <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" wire:click="ceroStepSubmit" type="button" >Continuar</button>
             </div>
         </div>
     </div>
@@ -143,9 +78,24 @@
         <div class="col-xs-12">
             <div class="col-md-12">
                 <h3> Paso 2</h3>
-
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="unoStepSubmit">Siguiente</button>
-                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(0)">Atras</button>
+                @foreach($pregunta1 as $pregunta)
+                    <div class="form-group">
+                        <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                        @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                            {{$increment = 1}}
+                            <div class="form-check">
+                                    <input class="form-check-input" name="respuestas1" type="radio" wire:model="{{ $respuestas1[$increment]}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                    <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                        {{$respuestas->texto}}
+                                    </label>
+                                    {{$respuestas1[$increment]}}
+                            </div>
+                            {{$increment++}}
+                        @endforeach
+                    </div>
+                @endforeach
+                <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" type="button" wire:click="unoStepSubmit">Siguiente</button>
+                <button class="btn btn-danger nextBtn btn-lg pull-right btn-form" type="button" wire:click="back(0)">Atras</button>
             </div>
         </div>
     </div>
@@ -160,10 +110,32 @@
             </div>
         </div>
     </div>
-    <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
+    <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-4">
         <div class="col-xs-12">
             <div class="col-md-12">
-                <h3> Step 3</h3>
+                <h3> Step 4</h3>
+
+
+                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
+                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-5">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 5</h3>
+
+
+                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
+                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content {{ $currentStep != 5 ? 'displayNone' : '' }}" id="step-6">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 6</h3>
 
 
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>

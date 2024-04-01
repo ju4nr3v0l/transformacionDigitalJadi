@@ -80,3 +80,24 @@ body{
 .displayNone{
     display: none;
 }
+
+.btn-form{
+    border-radius: 0;
+}
+
+.btn-primary{
+    background-color: #123456;
+    border-color: #123456
+
+}
+
+.btn-danger{
+    background-color: gray;
+    border-color: gray;
+
+}
+
+.question-head{
+    font-size: 1.5em;
+    font-weight: bold;
+}

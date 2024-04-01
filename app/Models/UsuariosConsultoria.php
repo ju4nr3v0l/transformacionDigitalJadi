@@ -11,8 +11,7 @@ class UsuariosConsultoria extends Model
     protected $primaryKey = 'usuarioConsultoriaId';
 
 
-    protected $attributes = [
-        'usuarioConsultoriaId',
+    protected $fillable = [
         'nit',
         'nombre_inmobiliaria',
         'nombre_completo',
