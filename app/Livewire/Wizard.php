@@ -59,6 +59,15 @@ class Wizard extends Component
             'nit' => 'required',
             'nombreInmobiliaria' => 'required',
             'cargo' => 'required',
+        ], [
+            'nombreCompleto.required' => 'El nombre completo es requerido',
+            'correo.required' => 'El correo es requerido',
+            'correo.email' => 'El correo no es válido',
+            'celular.required' => 'El celular es requerido',
+            'celular.numeric' => 'El celular debe ser numérico',
+            'nit.required' => 'El nit es requerido',
+            'nombreInmobiliaria.required' => 'El nombre de la inmobiliaria es requerido',
+            'cargo.required' => 'El cargo es requerido',
         ]);
 
         $existe = UsuariosConsultoria::where('correo', $this->correo)->first();
@@ -106,6 +115,12 @@ class Wizard extends Component
             'respuesta4' => 'required',
             'respuesta5' => 'required',
 
+        ], [
+            'respuesta1.required' => 'La respuesta 1 es requerida',
+            'respuesta2.required' => 'La respuesta 2 es requerida',
+            'respuesta3.required' => 'La respuesta 3 es requerida',
+            'respuesta4.required' => 'La respuesta 4 es requerida',
+            'respuesta5.required' => 'La respuesta 5 es requerida',
         ]);
         $usuario = UsuariosConsultoria::where('correo', $this->correo)->first();
         $this->saveRespuestaUsuarios($this->respuesta1, $usuario->usuarioConsultoriaId);
@@ -130,6 +145,12 @@ class Wizard extends Component
             'respuesta9' => 'required',
             'respuesta10' => 'required',
 
+        ], [
+            'respuesta6.required' => 'La respuesta 6 es requerida',
+            'respuesta7.required' => 'La respuesta 7 es requerida',
+            'respuesta8.required' => 'La respuesta 8 es requerida',
+            'respuesta9.required' => 'La respuesta 9 es requerida',
+            'respuesta10.required' => 'La respuesta 10 es requerida',
         ]);
         $usuario = UsuariosConsultoria::where('correo', $this->correo)->first();
         $this->saveRespuestaUsuarios($this->respuesta6, $usuario->usuarioConsultoriaId);
@@ -153,6 +174,12 @@ class Wizard extends Component
             'respuesta14' => 'required',
             'respuesta15' => 'required',
 
+        ], [
+            'respuesta11.required' => 'La respuesta 11 es requerida',
+            'respuesta12.required' => 'La respuesta 12 es requerida',
+            'respuesta13.required' => 'La respuesta 13 es requerida',
+            'respuesta14.required' => 'La respuesta 14 es requerida',
+            'respuesta15.required' => 'La respuesta 15 es requerida',
         ]);
         $usuario = UsuariosConsultoria::where('correo', $this->correo)->first();
         $this->saveRespuestaUsuarios($this->respuesta11, $usuario->usuarioConsultoriaId);
@@ -174,6 +201,12 @@ class Wizard extends Component
             'respuesta19' => 'required',
             'respuesta20' => 'required',
 
+        ], [
+            'respuesta16.required' => 'La respuesta 16 es requerida',
+            'respuesta17.required' => 'La respuesta 17 es requerida',
+            'respuesta18.required' => 'La respuesta 18 es requerida',
+            'respuesta19.required' => 'La respuesta 19 es requerida',
+            'respuesta20.required' => 'La respuesta 20 es requerida',
         ]);
         $usuario = UsuariosConsultoria::where('correo', $this->correo)->first();
         $this->saveRespuestaUsuarios($this->respuesta16, $usuario->usuarioConsultoriaId);
