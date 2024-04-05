@@ -9,9 +9,12 @@ class RespuestasUsuarios extends Model
 {
 
     protected $primaryKey = 'respuestaUsuarioId';
+    public $timestamps = false;
 
     protected $attributes = [
-        'respuestaUsuarioId',
+        'recomendacion_copilot' => null
+    ];
+    protected $fillable = [
         'respuestaFk',
         'usuarioFk',
         'fecha'

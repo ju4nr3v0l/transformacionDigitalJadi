@@ -81,17 +81,16 @@
                 @foreach($pregunta1 as $pregunta)
                     <div class="form-group">
                         <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                        @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
                         @foreach($pregunta->RespuestasPreguntas as $respuestas)
-                            {{$increment = 1}}
                             <div class="form-check">
-                                    <input class="form-check-input" name="respuestas1" type="radio" wire:model="{{ $respuestas1[$increment]}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                    <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                        {{$respuestas->texto}}
-                                    </label>
-                                    {{$respuestas1[$increment]}}
+                                <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                    {{$respuestas->texto}}
+                                </label>
                             </div>
-                            {{$increment++}}
                         @endforeach
+
                     </div>
                 @endforeach
                 <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" type="button" wire:click="unoStepSubmit">Siguiente</button>
@@ -102,8 +101,22 @@
     <div class="row setup-content {{ $currentStep != 2 ? 'displayNone' : '' }}" id="step-3">
         <div class="col-xs-12">
             <div class="col-md-12">
-                <h3> Step 3</h3>
+                <h3> Paso 3</h3>
+                @foreach($pregunta2 as $pregunta)
+                    <div class="form-group">
+                        <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                        @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                        @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                            <div class="form-check">
+                                <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                    {{$respuestas->texto}}
+                                </label>
+                            </div>
+                        @endforeach
 
+                    </div>
+                @endforeach
 
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="dosStepSubmit">Siguiente</button>
                 <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(1)">Atras</button>
@@ -113,8 +126,22 @@
     <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-4">
         <div class="col-xs-12">
             <div class="col-md-12">
-                <h3> Step 4</h3>
+                <h3> Paso 4</h3>
+                @foreach($pregunta3 as $pregunta)
+                    <div class="form-group">
+                        <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                        @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                        @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                            <div class="form-check">
+                                <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                    {{$respuestas->texto}}
+                                </label>
+                            </div>
+                        @endforeach
 
+                    </div>
+                @endforeach
 
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
                 <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
@@ -124,22 +151,37 @@
     <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-5">
         <div class="col-xs-12">
             <div class="col-md-12">
-                <h3> Step 5</h3>
+                <h3> Paso 5</h3>
+                @foreach($pregunta4 as $pregunta)
+                    <div class="form-group">
+                        <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                        @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                        @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                            <div class="form-check">
+                                <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                    {{$respuestas->texto}}
+                                </label>
+                            </div>
+                        @endforeach
 
+                    </div>
+                @endforeach
 
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
-                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="cuatroStepSubmit">Siguiente</button>
+                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Atras</button>
             </div>
         </div>
     </div>
     <div class="row setup-content {{ $currentStep != 5 ? 'displayNone' : '' }}" id="step-6">
         <div class="col-xs-12">
             <div class="col-md-12">
-                <h3> Step 6</h3>
+                <h3> Terminaste</h3>
 
-
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
-                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+                <div class="Title">
+                    <h3>Gracias por completar la consultoria</h3>
+                    <p>Poner aca la carreta para indicar que al correo que se enviara el resultado</p>
+                </div>
             </div>
         </div>
     </div>

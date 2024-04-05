@@ -10,6 +10,6 @@ Route::get('/', function () {
 Route::get('/dimensiones', function () {
     return view('dimensiones');
 });
-Route::get('wizard', function () {
+Route::get('inicioConsultoria', function () {
     return view('inicioConsultoria');
 });

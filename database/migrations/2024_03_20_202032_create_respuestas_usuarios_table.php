@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('fecha');
             $table->foreignId('respuestaFk')->constrained('respuestas_preguntas', 'respuestaId');
             $table->foreignId('usuarioFk')->constrained('usuarios_consultorias', 'usuarioConsultoriaId');
-            $table->longText('recomendacion_copilot');
+            $table->longText('recomendacion_copilot')->nullable(true);
         });
     }
 
