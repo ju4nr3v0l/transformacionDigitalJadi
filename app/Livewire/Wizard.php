@@ -55,7 +55,7 @@ class Wizard extends Component
         $validatedData = $this->validate([
             'nombreCompleto' => 'required',
             'correo' => 'required|email',
-            'celular' => 'required|numeric',
+            'celular' => 'required|numeric|min:10',
             'nit' => 'required',
             'nombreInmobiliaria' => 'required',
             'cargo' => 'required',
@@ -65,6 +65,7 @@ class Wizard extends Component
             'correo.email' => 'El correo no es válido',
             'celular.required' => 'El celular es requerido',
             'celular.numeric' => 'El celular debe ser numérico',
+            'celular.min' => 'El celular debe tener al menos 10 digitos',
             'nit.required' => 'El nit es requerido',
             'nombreInmobiliaria.required' => 'El nombre de la inmobiliaria es requerido',
             'cargo.required' => 'El cargo es requerido',

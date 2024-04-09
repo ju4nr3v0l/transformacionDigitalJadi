@@ -3,13 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('inicioConsultoria');
+    return view('landing');
 });
 
 
 Route::get('/dimensiones', function () {
     return view('dimensiones');
 });
-Route::get('inicioConsultoria', function () {
+Route::get('/inicioConsultoria', function () {
     return view('inicioConsultoria');
 });

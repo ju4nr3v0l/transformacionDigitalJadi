@@ -82,12 +82,12 @@ body{
 }
 
 .btn-form{
-    border-radius: 0;
+    border-radius: 0!important;
 }
 
 .btn-primary{
-    background-color: #123456;
-    border-color: #123456
+    background-color: #123456!important;
+    border-color: #123456!important;
 
 }
 
@@ -104,4 +104,10 @@ body{
 
 .error{
     color: red;
+}
+
+
+.card-header{
+    background-image: linear-gradient(to right, #123456, #123456);
+    color: white;
 }
