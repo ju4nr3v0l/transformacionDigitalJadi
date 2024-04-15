@@ -36,7 +36,14 @@
             <div class="row setup-content {{ $currentStep != 0 ? 'displayNone' : '' }}" id="step-0">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3> Paso 1</h3>
+                        <h3> Objetivos de Transformación Digital</h3>
+                        <p>
+                            Bienvenido a la primera fase de nuestra encuesta DigiPT, donde comenzaremos a esclarecer el panorama de transformación digital de su organización. Sus respuestas serán fundamentales para identificar el rumbo que debemos tomar juntos en este viaje de evolución y adaptación tecnológica. Conozcamos sus aspiraciones, retos y experiencias anteriores para personalizar nuestro enfoque y asegurar que la transformación digital se traduzca en resultados concretos y beneficios duraderos para su empresa.
+
+                        </p>
+                        <p>
+                            Por favor, complete el siguiente formulario con sus datos personales y profesionales. Posteriormente, responderá una serie de preguntas que nos permitirán evaluar su nivel de madurez digital en ocho dimensiones clave: Estrategia Digital, Tecnología y Arquitectura, Innovación, Agilidad Organizacional, Analítica y Datos, Operaciones y Procesos, Personas y Cultura, y Experiencia del Cliente.
+                        </p>
 
                         <div class="form-group">
                             <label for="title">Nombre Completo:</label>
@@ -72,6 +79,30 @@
                             <input type="text" wire:model="cargo" class="form-control" id="cargo">
                             @error('cargo') <span class="error">{{ $message }}</span> @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="title">Cargo:</label>
+                            <input type="text" wire:model="cargo" class="form-control" id="cargo">
+                            @error('cargo') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="title">¿Cuáles son los objetivos específicos de transformación digital de su organización y cómo se imagina que será la empresa una vez estos objetivos se hayan cumplido?
+                                </label>
+                            <textarea  wire:model="preInicio1" class="form-control" id="preInicio1"></textarea>
+                            @error('preInicio1') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="title">La transformación digital implica cambios significativos y no exentos de desafíos. ¿Qué limitaciones o riesgos ha identificado en el proceso de transformación digital de su organización? Describa esos elementos que podrían representar un obstáculo para alcanzar sus metas.
+                            </label>
+                            <textarea  wire:model="preInicio2" class="form-control" id="preInicio2"></textarea>
+                            @error('preInicio2') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Basándonos en el conocimiento que proviene de la experiencia, cuéntenos sobre sus iniciativas pasadas de transformación digital: ¿Qué acciones han emprendido? ¿Qué estrategias han resultado exitosas y cuáles no han tenido el impacto esperado?
+                            </label>
+                            <textarea  wire:model="preInicio3" class="form-control" id="preInicio3"></textarea>
+                            @error('preInicio3') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+
 
                         <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" wire:click="ceroStepSubmit" type="button" >Continuar</button>
                     </div>

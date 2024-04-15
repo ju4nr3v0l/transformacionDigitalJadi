@@ -18,7 +18,10 @@ class UsuariosConsultoria extends Model
         'cargo',
         'celular',
         'correo',
-        'step'
+        'step',
+        'objetivos_transformacion_digital',
+        'desafios_riesgos',
+        'experiencia_transformacion_digital',
 
     ];
 

@@ -12,7 +12,7 @@ class Wizard extends Component
 {
 
     public $currentStep = 0;
-    public $nombreCompleto, $correo, $celular, $nit, $nombreInmobiliaria, $cargo;
+    public $nombreCompleto, $correo, $celular, $nit, $nombreInmobiliaria, $cargo, $preInicio1,$preInicio2, $preInicio3;
     public $pregunta1 = [];
     public $pregunta2 = [];
     public $pregunta3 = [];
@@ -59,6 +59,9 @@ class Wizard extends Component
             'nit' => 'required',
             'nombreInmobiliaria' => 'required',
             'cargo' => 'required',
+            'preInicio1' => 'required',
+            'preInicio2' => 'required',
+            'preInicio3' => 'required',
         ], [
             'nombreCompleto.required' => 'El nombre completo es requerido',
             'correo.required' => 'El correo es requerido',
@@ -69,7 +72,11 @@ class Wizard extends Component
             'nit.required' => 'El nit es requerido',
             'nombreInmobiliaria.required' => 'El nombre de la inmobiliaria es requerido',
             'cargo.required' => 'El cargo es requerido',
+            'preInicio1.required' => 'La respuesta frente a Objetivos de Transformación Digital es requerida',
+            'preInicio2.required' => 'La respuesta frente a Desafíos y Riesgos es requerida',
+            'preInicio3.required' => 'La respuesta frente a Experiencia en Transformación Digital es requerida',
         ]);
+
 
         $existe = UsuariosConsultoria::where('correo', $this->correo)->first();
         if(!$existe){
@@ -81,6 +88,9 @@ class Wizard extends Component
             $usuarioConsultoria->nombre_inmobiliaria = $this->nombreInmobiliaria;
             $usuarioConsultoria->cargo = $this->cargo;
             $usuarioConsultoria->step = 1;
+            $usuarioConsultoria->objetivos_transformacion_digital = $this->preInicio1;
+            $usuarioConsultoria->desafios_riesgos = $this->preInicio2;
+            $usuarioConsultoria->experiencia_transformacion_digital = $this->preInicio3;
             $usuarioConsultoria->save();
             $this->pregunta1 = preguntas::whereBetween('preguntaId',[1,5])->get();
             $this->currentStep = 1;

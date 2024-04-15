@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('celular');
             $table->string('correo');
             $table->integer('step')->default(0);
+            $table->longText('objetivos_transformacion_digital');
+            $table->longText('desafios_riesgos');
+            $table->longText('experiencia_transformacion_digital');
 
         });
     }
