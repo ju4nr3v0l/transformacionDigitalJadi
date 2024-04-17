@@ -80,11 +80,6 @@
                             @error('cargo') <span class="error">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
-                            <label for="title">Cargo:</label>
-                            <input type="text" wire:model="cargo" class="form-control" id="cargo">
-                            @error('cargo') <span class="error">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="form-group">
                             <label for="title">¿Cuáles son los objetivos específicos de transformación digital de su organización y cómo se imagina que será la empresa una vez estos objetivos se hayan cumplido?
                                 </label>
                             <textarea  wire:model="preInicio1" class="form-control" id="preInicio1"></textarea>
