@@ -14,7 +14,7 @@ class ShowDimensiones extends Component
     public function boot()
     {
     $this->dimensiones = Dimensiones::all()->load('capacidades');
-        dump($this->dimensiones[0]->capacidades);
+
     }
 
     public function render()

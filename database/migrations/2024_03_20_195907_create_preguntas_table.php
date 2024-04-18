@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('preguntaId');
             $table->timestamps();
             $table->text('texto');
-            $table->string('clasificacion');
-            $table->integer('peso');
+            $table->string('clasificacion')->nullable(true);
+            $table->integer('peso')->nullable(true);
             $table->foreignId('capacidadFk')->constrained('capacidades', 'capacidadId');
         });
     }

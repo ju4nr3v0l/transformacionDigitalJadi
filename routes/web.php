@@ -15,3 +15,4 @@ Route::get('/inicioConsultoria', function () {
 });
 
 Route::get('/recomendaciones/{id_usuario}',[\App\Http\Controllers\GeneracionCopilotController::class, 'generarRecomendacionCopilot']);
+Route::get('/reporte/{id_usuario}',[\App\Http\Controllers\GenerarReporteController::class, 'generarReporte']);

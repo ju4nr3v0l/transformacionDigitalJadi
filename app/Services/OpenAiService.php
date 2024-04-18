@@ -16,10 +16,13 @@ class OpenAiService
 
     public function generateText($prompt)
     {
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
-            'Content-Type' => 'application/json',
-        ])->post("{$this->baseUrl}", [
+        $response = Http::retry(3, 100)
+            ->connectTimeout(60)
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Content-Type' => 'application/json',
+            ])
+            ->post("{$this->baseUrl}", [
             'model' => 'gpt-4',
             'messages' => [
                 [
@@ -31,6 +34,7 @@ class OpenAiService
         if ($response->successful()) {
 
             return $response->json()['choices'][0]['message']["content"];
+
         }
 
         return 'No se pudo generar el texto.';
