@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 class OpenAiService
 {
     protected $apiKey;
-    protected $baseUrl = 'https://api.openai.com/v1';
+    protected $baseUrl = 'https://api.openai.com/v1/chat/completions';
 
     public function __construct()
     {
@@ -19,14 +19,18 @@ class OpenAiService
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
-        ])->post("{$this->baseUrl}/engines/davinci/completions", [
-            'prompt' => $prompt,
-            'max_tokens' => 100,
-            'temperature' => 0.7,
+        ])->post("{$this->baseUrl}", [
+            'model' => 'gpt-4',
+            'messages' => [
+                [
+                    'role' => 'user',
+                    'content' => $prompt
+                ]
+            ]
         ]);
-
         if ($response->successful()) {
-            return $response->json()['choices'][0]['text'];
+
+            return $response->json()['choices'][0]['message']["content"];
         }
 
         return 'No se pudo generar el texto.';

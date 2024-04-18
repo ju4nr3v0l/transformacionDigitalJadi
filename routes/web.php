@@ -13,3 +13,5 @@ Route::get('/dimensiones', function () {
 Route::get('/inicioConsultoria', function () {
     return view('inicioConsultoria');
 });
+
+Route::get('/recomendaciones/{id_usuario}',[\App\Http\Controllers\GeneracionCopilotController::class, 'generarRecomendacionCopilot']);
