@@ -38,4 +38,8 @@ class Dimensiones extends Model
     {
         return $this->hasMany(Capacidades::class, 'dimensionFk', 'dimensionId');
     }
+    public function recomendaciones(): HasMany
+    {
+        return $this->hasMany(RecomendacionPorDimensionModel::class, 'dimensionFk', 'dimensionId');
+    }
 }

@@ -10,6 +10,7 @@
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
+        "orhanerday/open-ai": "^5.1",
         "sentry/sentry-laravel": "^4.4"
     },
     "require-dev": {
