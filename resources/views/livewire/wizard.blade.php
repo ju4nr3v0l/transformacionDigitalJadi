@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-lg-12">
+
 
             @if(!empty($successMessage))
                 <div class="alert alert-success">
@@ -9,7 +9,7 @@
                 </div>
             @endif
 
-            <div class="stepwizard">
+            <div class="stepwizard card">
                 <div class="stepwizard-row setup-panel">
                     <div class="stepwizard-step">
                         <a href="#step-1" type="button" class="btn btn-circle {{ $currentStep != 0 ? 'btn-default' : 'btn-primary' }}">1</a>
@@ -32,8 +32,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row setup-content {{ $currentStep != 0 ? 'displayNone' : '' }}" id="step-0">
+        <div class="col-lg-12">
+            <div class="row setup-content {{ $currentStep != 0 ? 'displayNone' : '' }} card" id="step-0">
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3> Objetivos de Transformación Digital</h3>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="title">Nombre Inmobiliaria:</label>
+                            <label for="title">Nombre Empresa:</label>
                             <input type="text" wire:model="nombreInmobiliaria" class="form-control" id="nombreInmobiliaria">
                             @error('nombreInmobiliaria') <span class="error">{{ $message }}</span> @enderror
                         </div>
@@ -98,39 +98,48 @@
                             @error('preInicio3') <span class="error">{{ $message }}</span> @enderror
                         </div>
 
-
-                        <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" wire:click="ceroStepSubmit" type="button" >Continuar</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" wire:click="ceroStepSubmit" type="button" >Continuar</button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row setup-content {{ $currentStep != 1 ? 'displayNone' : '' }}" id="step-2">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3> Paso 2</h3>
+                        <div class="form-group">
+                            <button class="btn btn-danger nextBtn btn-lg pull-right btn-form" type="button" wire:click="back(0)">Atras</button>
+                        </div>
                         @foreach($pregunta1 as $pregunta)
-                            <div class="form-group">
-                                <label for="title" class="question-head">{{ $pregunta->texto }}</label>
-                                @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
-                                @foreach($pregunta->RespuestasPreguntas as $respuestas)
-                                    <div class="form-check">
-                                        <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                        <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                            {{$respuestas->texto}}
-                                        </label>
-                                    </div>
-                                @endforeach
+                            <div class="card card-questions">
+                                <div class="form-group">
+                                    <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                                    @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                                    @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                            <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                                {{$respuestas->texto}}
+                                            </label>
+                                        </div>
+                                    @endforeach
 
+                                </div>
                             </div>
+
                         @endforeach
-                        <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" type="button" wire:click="unoStepSubmit">Siguiente</button>
-                        <button class="btn btn-danger nextBtn btn-lg pull-right btn-form" type="button" wire:click="back(0)">Atras</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary nextBtn btn-lg pull-right btn-form" type="button" wire:click="unoStepSubmit">Siguiente</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row setup-content {{ $currentStep != 2 ? 'displayNone' : '' }}" id="step-3">
+            <div class="row setup-content {{ $currentStep != 2 ? 'displayNone' : '' }} card" id="step-3">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3> Paso 3</h3>
+                        <div class="form-group">
+                            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(1)">Atras</button>
+                        </div>
                         @foreach($pregunta2 as $pregunta)
                             <div class="form-group">
                                 <label for="title" class="question-head">{{ $pregunta->texto }}</label>
@@ -146,16 +155,18 @@
 
                             </div>
                         @endforeach
-
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="dosStepSubmit">Siguiente</button>
-                        <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(1)">Atras</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="dosStepSubmit">Siguiente</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-4">
+            <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }} card" id="step-4">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3> Paso 4</h3>
+                        <div class="form-group">
+                            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+                        </div>
                         @foreach($pregunta3 as $pregunta)
                             <div class="form-group">
                                 <label for="title" class="question-head">{{ $pregunta->texto }}</label>
@@ -171,16 +182,18 @@
 
                             </div>
                         @endforeach
-
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
-                        <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="tresStepSubmit">Siguiente</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-5">
+            <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }} card" id="step-5">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3> Paso 5</h3>
+                        <div class="form-group">
+                            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Atras</button>
+                        </div>
                         @foreach($pregunta4 as $pregunta)
                             <div class="form-group">
                                 <label for="title" class="question-head">{{ $pregunta->texto }}</label>
@@ -196,13 +209,13 @@
 
                             </div>
                         @endforeach
-
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="cuatroStepSubmit">Siguiente</button>
-                        <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Atras</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="cuatroStepSubmit">Siguiente</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row setup-content {{ $currentStep != 5 ? 'displayNone' : '' }}" id="step-6">
+            <div class="row setup-content {{ $currentStep != 5 ? 'displayNone' : '' }} card" id="step-6">
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3>Felicitaciones, ya esta un paso más cerca de avanzar en la transformación digital para su empresa.</h3>

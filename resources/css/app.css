@@ -48,6 +48,7 @@ body{
     display: table;
     width: 100%;
     position: relative;
+    margin: 10px!important;
 }
 .stepwizard-step button[disabled] {
     opacity: 1 !important;

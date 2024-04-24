@@ -48,6 +48,7 @@ body{
     display: table;
     width: 100%;
     position: relative;
+    margin-bottom: 10px;
 }
 .stepwizard-step button[disabled] {
     opacity: 1 !important;
@@ -110,4 +111,17 @@ body{
 .card-header{
     background-image: linear-gradient(to right, #123456, #123456);
     color: white;
+}
+
+.btn-landing{
+    width: 100%;
+}
+
+.btn-default {
+    background-color: lightgray;
+}
+
+.card-questions{
+    margin-bottom: 10px;
+    padding: 10px;
 }

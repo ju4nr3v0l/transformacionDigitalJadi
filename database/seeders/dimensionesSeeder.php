@@ -18,7 +18,7 @@ class dimensionesSeeder extends Seeder
             ['nombre' => 'Personas y Cultura'],
             ['nombre' => 'Operaciones y Procesos'],
             ['nombre' => 'Tecnología y Arquitectura'],
-            ['nombre' => 'Innovación y Agilidad'],
+            ['nombre' => 'Innovación'],
             ['nombre' => 'Agilidad Organizacional'],
             ['nombre' => 'Medición y Analítica'],
         ];
