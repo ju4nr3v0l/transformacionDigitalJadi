@@ -41,12 +41,10 @@ class GenerarReporteController extends Controller
 
             ];
 
-            $consolidado['data'][$dimension->nombre]['recomendacion'] =   str_replace( '*','',$recomendacion->recomendacion_copilot,);
+
+            $consolidado['data'][$dimension->nombre]['recomendacion'] =   json_decode(str_replace( '*','',$recomendacion->recomendacion_copilot,));
             $consolidado['data'][$dimension->nombre]['promt'] = $recomendacion->promt;
             $consolidado['data'][$dimension->nombre]['nombre'] = $dimension->nombre;
-            $consolidado['data'][$dimension->nombre]['promt'] = $recomendacion->promt;
-
-
 
         }
 
@@ -78,8 +76,11 @@ class GenerarReporteController extends Controller
 
         $consolidado['data']['graficos']['dimensiones'] = substr($consolidado['data']['graficos']['dimensiones'], 0, -1);
         $consolidado['data']['graficos']['valores'] = substr($consolidado['data']['graficos']['valores'], 0, -1);
-        $pdf = PDF::loadView('myPDF', $consolidado);
+        $consolidado['data']['resumenes']['resumen_ejecutivo'] =  str_replace( '*','',$usuario->resumen_ejecutivo);
+//        dd($consolidado);
 
+        $pdf = PDF::loadView('myPDF', $consolidado);
+//        return view('myPDF', $consolidado);
         return $pdf->download($usuario->nombre_inmobiliaria . '.pdf');
 
 

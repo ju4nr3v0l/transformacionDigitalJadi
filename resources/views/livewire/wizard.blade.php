@@ -82,7 +82,7 @@
                         <div class="form-group">
                             <label for="title">¿Cuáles son los objetivos específicos de transformación digital de su organización y cómo se imagina que será la empresa una vez estos objetivos se hayan cumplido?
                                 </label>
-                            <textarea  wire:model="preInicio1" class="form-control" id="preInicio1"></textarea>
+                            <textarea  wire:model="preInicio1" class="form-control" id="preInicio1" placeholder="Entre mas informaci"></textarea>
                             @error('preInicio1') <span class="error">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
@@ -141,18 +141,20 @@
                             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(1)">Atras</button>
                         </div>
                         @foreach($pregunta2 as $pregunta)
-                            <div class="form-group">
-                                <label for="title" class="question-head">{{ $pregunta->texto }}</label>
-                                @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
-                                @foreach($pregunta->RespuestasPreguntas as $respuestas)
-                                    <div class="form-check">
-                                        <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                        <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                            {{$respuestas->texto}}
-                                        </label>
-                                    </div>
-                                @endforeach
+                            <div class="card card-questions">
+                                <div class="form-group">
+                                    <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                                    @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                                    @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                            <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                                {{$respuestas->texto}}
+                                            </label>
+                                        </div>
+                                    @endforeach
 
+                                </div>
                             </div>
                         @endforeach
                         <div class="form-group">
@@ -168,18 +170,20 @@
                             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
                         </div>
                         @foreach($pregunta3 as $pregunta)
-                            <div class="form-group">
-                                <label for="title" class="question-head">{{ $pregunta->texto }}</label>
-                                @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
-                                @foreach($pregunta->RespuestasPreguntas as $respuestas)
-                                    <div class="form-check">
-                                        <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                        <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                            {{$respuestas->texto}}
-                                        </label>
-                                    </div>
-                                @endforeach
+                            <div class="card card-questions">
+                                <div class="form-group">
+                                    <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                                    @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                                    @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                            <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                                {{$respuestas->texto}}
+                                            </label>
+                                        </div>
+                                    @endforeach
 
+                                </div>
                             </div>
                         @endforeach
                         <div class="form-group">
@@ -195,18 +199,20 @@
                             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Atras</button>
                         </div>
                         @foreach($pregunta4 as $pregunta)
-                            <div class="form-group">
-                                <label for="title" class="question-head">{{ $pregunta->texto }}</label>
-                                @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
-                                @foreach($pregunta->RespuestasPreguntas as $respuestas)
-                                    <div class="form-check">
-                                        <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                        <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
-                                            {{$respuestas->texto}}
-                                        </label>
-                                    </div>
-                                @endforeach
+                            <div class="card card-questions">
+                                <div class="form-group">
+                                    <label for="title" class="question-head">{{ $pregunta->texto }}</label>
+                                    @error('respuesta'.$pregunta->preguntaId) <span class="error">{{ $message }}</span> @enderror
+                                    @foreach($pregunta->RespuestasPreguntas as $respuestas)
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="respuesta{{$pregunta->preguntaId}}" type="radio" wire:model="respuesta{{$pregunta->preguntaId}}" value="{{ $respuestas->respuestaId }}" id="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                            <label class="form-check-label" for="respuestasPregunta.{{ $respuestas->respuestaId }}">
+                                                {{$respuestas->texto}}
+                                            </label>
+                                        </div>
+                                    @endforeach
 
+                                </div>
                             </div>
                         @endforeach
                         <div class="form-group">

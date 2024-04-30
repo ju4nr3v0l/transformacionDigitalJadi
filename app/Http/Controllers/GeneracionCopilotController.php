@@ -11,6 +11,7 @@ use App\Models\RespuestasPreguntas;
 use App\Models\RespuestasUsuarios;
 use App\Models\UsuariosConsultoria;
 use App\Services\OpenAiService;
+use App\Services\OpenAiServiceResumenEjecutivo;
 use Illuminate\Http\Request;
 
 class GeneracionCopilotController extends Controller
@@ -41,9 +42,10 @@ class GeneracionCopilotController extends Controller
         //generamos las remomendaciones por dimension y guardamos
 
         $dimensiones = Dimensiones::all();
-
+        $openAi = new OpenAiService();
+        $threadId = $openAi->createThread();
         foreach ($dimensiones as $dimension) {
-            $respuestaFunc = $this->generarRecomendacionYpromt($user,$consolidado['data'][$dimension->nombre],$dimension->nombre);
+            $respuestaFunc = $this->generarRecomendacionYpromt($user,$consolidado['data'][$dimension->nombre],$dimension->nombre,$threadId);
             $consolidado['data'][$dimension->nombre]['recomendacion_copilot'] = $respuestaFunc['recomendacion'];
             $consolidado['data'][$dimension->nombre]['promt'] = $respuestaFunc['promt'];
             $recomendacion = new RecomendacionPorDimensionModel();
@@ -55,6 +57,12 @@ class GeneracionCopilotController extends Controller
             $recomendacion->save();
 
         }
+
+        // Generamos el resumen ejecutivo
+
+        $resumenEjecutivo = $openAi->generateText($threadId,"entregame un parrafo de resumen ejecutivo de las dimensiones, prioriza las más relevantes por su fortaleza o debilidad en la organización");
+        $user->resumen_ejecutivo = $resumenEjecutivo;
+        $user->save();
 
         //marcamos las ya generadas
         foreach ($preguntasSinRecomendacionCopilot as $preguntas){
@@ -77,19 +85,41 @@ class GeneracionCopilotController extends Controller
         return $respuestasUsuariosSinRecomentacion;
     }
 
-    private function generarRecomendacionYpromt($user,$consolidado,$dimension){
+    private function generarRecomendacionYpromt($user,$consolidado,$dimension,$trheadId){
+
         $respuesta = [];
         $openAi = new OpenAiService();
+
         $promt = "Teniendo el contexto de que el usuario " . $user->nombre_inmobiliaria . " y que sus objetivos frente a la transformacion digital son:". $user->objetivos_transformacion_digital .", Sus desafios y riesgos son:-" . $user->desafios_riesgos . " Y su experiencia en transformacion digital es: - ". $user->experiencia_transformacion_digital ." y se esta analizando la dimension a analizar es ". $dimension . "  ha respondido las preguntas:  ";
 
         foreach($consolidado as $capadidad){
-            $promt .= "- ".$capadidad['pregunta'] . " con la respuesta: " . $capadidad['respuesta'] . "
+           $promt .= "- ".$capadidad['pregunta'] . " con la respuesta: " . $capadidad['respuesta'] . "
             ";
         }
-        $promt .= "Con base a esas respuestas, que le recomiendas para mejorar en la dimension ". $dimension . "? y cual es tu diagnóstico de la situación actual?";
+//        $promt .= "Con base a esas respuestas, que le recomiendas para mejorar en la dimension ". $dimension . "? y cual es tu diagnóstico de la situación actual?";
         $respuesta['promt'] = $promt;
-        $respuesta['recomendacion'] = $openAi->generateText($promt);
+
+        $respuesta['recomendacion'] = $openAi->generateText($trheadId,$promt);
         return $respuesta;
     }
+
+//    private function generarResumenEjecutivo($idUsuario)
+//    {
+//
+//        $promt = "Teniendo en cuenta las siguientes recomendaciones generadas por CoPilot: ";
+//        $user = UsuariosConsultoria::find($idUsuario);
+//
+//        $recomendaciones = RecomendacionPorDimensionModel::where('usuarioFk', $idUsuario)->get();
+//        foreach ($recomendaciones as $recomendacion) {
+//            $promt .= "- " . $recomendacion->recomendacion_copilot . "
+//            ";
+//        }
+//        $promt .= " Dame un resumen ejecutivo para la empresa {$user->nombre_inmobiliaria}";
+//
+//        $openAiResumen = new OpenAiServiceResumenEjecutivo();
+//        $resumenEjecutivo = $openAiResumen->generateText($promt);
+//        return $resumenEjecutivo;
+//
+//    }
 
 }

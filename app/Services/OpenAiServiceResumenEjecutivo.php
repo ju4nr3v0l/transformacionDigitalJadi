@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Orhanerday\OpenAi\OpenAi;
 
-class OpenAiService
+class OpenAiServiceResumenEjecutivo
 {
     protected $apiKey;
     protected $baseUrlTheads = 'https://api.openai.com/v1/threads';
@@ -13,25 +13,30 @@ class OpenAiService
     public function __construct()
     {
         $this->apiKey = env('OPENAI_API_KEY');
-        $this->assistantId = 'asst_LiU7vdv0QH4HpiLKYeVTsT3r';
+        $this->assistantId = 'asst_6v31EMaxy22uiG9Gu2U8Ovww';
 
     }
 
-    public function generateText($threadId, $promt)
+    public function generateText($promt)
     {
         $open_ai_key = $this->apiKey;
         $open_ai = new OpenAi($open_ai_key);
         $data = [
-            'role' => 'user',
-            'content' => $promt,
+            'assistant_id' =>  $this->assistantId,
+            'thread' => [
+                'messages' => [
+                    [
+                        'role' => 'user',
+                        'content' => $promt,
+                        'file_ids' => [],
+                    ],
+                ],
+            ],
         ];
 
-
-        $messageCreated = json_decode($open_ai->createThreadMessage($threadId, $data));
-
-        $dataAssistant = $data = ['assistant_id' => $this->assistantId];
-        $run = json_decode($open_ai->createRun($threadId,$dataAssistant));
-
+        $run = json_decode($open_ai->createThreadAndRun($data));
+//        $assistant = json_decode($open_ai->retrieveAssistant($this->assistantId));
+//        dd($assistant);
         $query = ['limit' => 10];
 //        $steps = json_decode($open_ai->listRunSteps($run->thread_id, $run->id, $query));
         $runStatus = json_decode($open_ai->retrieveRun($run->thread_id,$run->id));
@@ -42,24 +47,6 @@ class OpenAiService
         $steps = json_decode($open_ai->listRunSteps($run->thread_id, $run->id, $query));
         $message = json_decode($open_ai->retrieveThreadMessage($run->thread_id, $steps->data[0]->step_details->message_creation->message_id));
         return $message->content[0]->text->value;
-    }
-
-    public function createThread(){
-        $open_ai_key = $this->apiKey;
-        $open_ai = new OpenAi($open_ai_key);
-        $data = [
-            'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => '',
-                    'file_ids' => [],
-                ],
-            ],
-        ];
-
-        $thread = json_decode($open_ai->createThread($data));
-        return $thread->id;
-
     }
 
 }

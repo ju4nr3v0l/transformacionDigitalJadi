@@ -22,6 +22,7 @@ class UsuariosConsultoria extends Model
         'objetivos_transformacion_digital',
         'desafios_riesgos',
         'experiencia_transformacion_digital',
+        'resumen_ejecutivo',
 
     ];
 

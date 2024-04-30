@@ -24,6 +24,7 @@ return new class extends Migration
             $table->longText('objetivos_transformacion_digital');
             $table->longText('desafios_riesgos');
             $table->longText('experiencia_transformacion_digital');
+            $table->longText('resumen_ejecutivo')->nullable(true);
 
         });
     }

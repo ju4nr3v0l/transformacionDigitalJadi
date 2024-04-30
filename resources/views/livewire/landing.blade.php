@@ -23,7 +23,7 @@
                     Agradecemos su tiempo y colaboración para completar esta encuesta. Juntos, podemos navegar por el camino de la transformación digital.
 
                 </p>
-                <img src="{{ asset('img/Digipt.jpg') }}" alt="DiGiPT" class="img-fluid">
+                <img src="{{ asset('img/Digipt.png') }}" alt="DiGiPT" class="img-fluid">
 
                 <!-- Botón de Bootstrap con clase para correo -->
                 <div class="form-group">

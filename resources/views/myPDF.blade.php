@@ -17,11 +17,13 @@
     <br/>
     <br/>
     <br/>
-    <img style="width: 100%; height: 50%;"  src="https://quickchart.io/chart?c={type:'radar',data:{labels:[{{$data['graficos']['dimensiones']}}],datasets:[{label:'Valores',data:[{{$data['graficos']['valores']}}]}]}}"/>
+    <img style="width: 100%; height: 70%;"  src="https://quickchart.io/chart?c={type:'radar',data:{labels:[{{$data['graficos']['dimensiones']}}],datasets:[{label:'Valores',data:[{{$data['graficos']['valores']}}]}]},options:{legend:{display:true,position:'right',align:'start'},scale:{ticks:{suggestedMin: 0,suggestedMax: 3,stepSize: 1,showLabelBackdrop: true}}}}"/>
     <div>
         <div class="page-break"></div>
     </div>
-
+    <h1 class="display-4" style="text-align: center">Resumen Ejecutivo</h1>
+    <p class="lead">{!! nl2br(e($data['resumenes']['resumen_ejecutivo'])) !!}</p>
+    <div class="page-break"></div>
         @foreach($data as $dimension)
             @if(isset($dimension['nombre']))
                 <h1 class="display-4">{{ $dimension['nombre'] }}</h1>
@@ -34,26 +36,17 @@
             @if(isset($dimension['Clasificacion']))
                 <p class="lead">Estado: {{ $dimension['Clasificacion'] }}<p>
             @endif
-            @if(isset($dimension['nombre']))
-                <h1 class="display-5"> Capacidades evaluadas de la dimensión {{ $dimension['nombre'] }}</h1>
-            @endif
-                @foreach($dimension as $capacidad)
-
-                    @if(isset($capacidad['capacidad']))
-                        <p class="lead">{{ $capacidad['capacidad'] }}</p>
-
-                    @endif
-                    @if(isset($capacidad['descripcion_capacidad']))
-                        <div class="col-md-6">
-                            <blockquote class="blockquote">
-                                <p >{{ $capacidad['descripcion_capacidad'] }}</p>
-                            </blockquote>
-                        </div>
-                    @endif
-                @endforeach
             <h1 class="display-5">Diagnóstico y Recomendaciones</h1>
-            @if(isset($dimension['recomendacion']))
-                <p class="lead">{!! nl2br(e($dimension['recomendacion']))!!}</p>
+            @if(isset($dimension['recomendacion']->TituloDimension))
+                <p class="lead">{!! nl2br(e($dimension['recomendacion']->TituloDimension))!!}</p>
+                <p class="lead">{!! nl2br(e($dimension['recomendacion']->ParrafoDimension))!!}</p>
+                @php $incr = 1;@endphp
+                @foreach($dimension['recomendacion']->Recomendaciones as $recomendacion)
+
+                        <span>- </span><p class="lead">{!! nl2br(e($recomendacion))!!}</p>
+                    @php$incr++;@endphp
+                @endforeach
+
             @endif
             <div class="page-break"></div>
         @endforeach
