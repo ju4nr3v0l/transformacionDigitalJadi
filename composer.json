@@ -11,6 +11,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
         "orhanerday/open-ai": "^5.1",
+        "phpoffice/phppresentation": "^1.0",
         "sentry/sentry-laravel": "^4.4"
     },
     "require-dev": {
