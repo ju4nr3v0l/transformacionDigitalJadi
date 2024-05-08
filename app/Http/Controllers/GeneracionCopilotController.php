@@ -60,7 +60,7 @@ class GeneracionCopilotController extends Controller
 
         // Generamos el resumen ejecutivo
 
-        $resumenEjecutivo = $openAi->generateText($threadId,"entregame un parrafo de resumen ejecutivo de las dimensiones, prioriza las más relevantes por su fortaleza o debilidad en la organización");
+        $resumenEjecutivo = $openAi->generateText($threadId,"entregame un parrafo de resumen ejecutivo de las dimensiones, prioriza las más relevantes por su fortaleza o debilidad en la organización de maximo 500 palabras");
         $user->resumen_ejecutivo = $resumenEjecutivo;
         $user->save();
 

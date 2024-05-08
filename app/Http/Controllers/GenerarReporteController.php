@@ -13,6 +13,8 @@ use App\Models\UsuariosConsultoria;
 use PDF;
 use PhpOffice\PhpPresentation\DocumentLayout;
 use PhpOffice\PhpPresentation\IOFactory;
+use PhpOffice\PhpPresentation\Shape\Chart\Gridlines;
+use PhpOffice\PhpPresentation\Shape\Chart\Marker;
 use PhpOffice\PhpPresentation\Shape\Chart\Series;
 use PhpOffice\PhpPresentation\Shape\Chart\Type\Radar;
 use PhpOffice\PhpPresentation\Style\Alignment;
@@ -330,9 +332,18 @@ Nuestro objetivo es proporcionar un diagnóstico detallado que sirva como punto 
         // Creamos shape para el grafico
         $radarChart = new Radar();
         $series = new Series('Valoración', $dataGraficos);
+        $gridlines = new Gridlines();
+        $gridlines->getOutline()->setWidth(1);
+        $gridlines->getOutline()->getFill()->setFillType(Fill::FILL_SOLID)->setStartColor(new StyleColor(self::TEXT_COLOR));
         $series->setShowValue(false);
         $series->setShowSeriesName(false);
+        $series->setShowLeaderLines(true);
         $series->hasShowLeaderLines(true);
+        $series->hasShowSeparator(true);
+        $marker = $series->getMarker();
+        $marker->setSymbol(Marker::SYMBOL_DASH)->setSize(4);
+        $marker->getFill()->setFillType(Fill::FILL_SOLID);
+
         $radarChart->addSeries($series);
         $shapeChart = $diapositiva5->createChartShape();
         $shapeChart->setName('Grafico')
@@ -344,6 +355,12 @@ Nuestro objetivo es proporcionar un diagnóstico detallado que sirva como punto 
         $shapeChart->getTitle()->setText('Resultado de la valoración de las dimensiones');
         $shapeChart->getPlotArea()->getAxisY()->setMinorUnit(1);
         $shapeChart->getPlotArea()->getAxisY()->setMajorUnit(3);
+        $shapeChart->getPlotArea()->getAxisX()->setMajorGridlines($gridlines);
+        $shapeChart->getPlotArea()->getAxisY()->setMajorGridlines($gridlines);
+        $shapeChart->getPlotArea()->getAxisY()->setMinorGridlines($gridlines);
+        $shapeChart->getPlotArea()->getAxisx()->setMinorGridlines($gridlines);
+//        $shapeChart->getPlotArea()->getAxisx()->set($gridlines);
+
         $shapeChart->getPlotArea()->setType($radarChart);
 
         // Creamos barra de titulo y texto
@@ -369,10 +386,10 @@ Nuestro objetivo es proporcionar un diagnóstico detallado que sirva como punto 
             ->setHeight(700)
             ->setWidth(900)
             ->setOffsetX(960)
-            ->setOffsetY(121);
+            ->setOffsetY(60);
         $shapeParagraph->getActiveParagraph()->getAlignment()->setHorizontal(\PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_JUSTIFY);
         $textRunparagraph = $shapeParagraph->createTextRun($parrafoTitulo);
-        $textRunparagraph->getFont()->setBold(false)->setSize(24)->setColor(new StyleColor(self::TEXT_COLOR));
+        $textRunparagraph->getFont()->setBold(false)->setSize(20)->setColor(new StyleColor(self::TEXT_COLOR));
 
         // Creamos la imagen del logo de Jadi SAS
         $shapelogo = new Drawing\File();
