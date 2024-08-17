@@ -27,7 +27,7 @@ class preguntasSeeder extends Seeder
             ['texto'=>'¿Cómo ha integrado tu organización tecnologías emergentes 4.0 para mejorar procesos o la experiencia del cliente?','capacidadFk'=>12],
             ['texto'=>'¿Cómo gestiona tu organización el ciclo de vida completo de su infraestructura tecnológica?','capacidadFk'=>13],
             ['texto'=>'¿Cómo define y aplica tu organización las normativas de seguridad de la información y protección de datos?','capacidadFk'=>14],
-            ['texto'=>'¿En qué medida se han implementado las prácticas de integración y despliegue continuo en los equipos de tu organización?','capacidadFk'=>15],
+            ['texto'=>'¿En qué medida se han implementado las prácticas de integración y despliegue continuo en los equipos de tu organización, que permitan la automatización de despliegues y pruebas?','capacidadFk'=>15],
             ['texto'=>'¿Cómo se maneja el proceso de innovación dentro de tu organización?','capacidadFk'=>16],
             ['texto'=>'¿Cómo incorpora tu organización conceptos de innovación abierta para mejorar sus procesos y productos?','capacidadFk'=>17],
             ['texto'=>'¿Cómo describirías la agilidad organizacional en tu empresa?','capacidadFk'=>18],

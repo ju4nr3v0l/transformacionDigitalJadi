@@ -75,6 +75,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="title">Cantidad aproximada de empleados:</label>
+                            <input type="number" wire:model="tamanoEmpresa" class="form-control" id="tamanoEmpresa">
+                            @error('tamanoEmpresa') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="title">Cargo:</label>
                             <input type="text" wire:model="cargo" class="form-control" id="cargo">
                             @error('cargo') <span class="error">{{ $message }}</span> @enderror

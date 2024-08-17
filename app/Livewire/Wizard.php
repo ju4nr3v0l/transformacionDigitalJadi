@@ -40,6 +40,8 @@ class Wizard extends Component
     public $respuesta20;
     public $successMessage = '';
 
+    public $tamanoEmpresa;
+
     public function render()
     {
         return view('livewire.wizard');
@@ -62,6 +64,7 @@ class Wizard extends Component
             'preInicio1' => 'required',
             'preInicio2' => 'required',
             'preInicio3' => 'required',
+            'tamanoEmpresa' => 'required|numeric',
         ], [
             'nombreCompleto.required' => 'El nombre completo es requerido',
             'correo.required' => 'El correo es requerido',
@@ -70,6 +73,7 @@ class Wizard extends Component
             'celular.numeric' => 'El celular debe ser numérico',
             'celular.min' => 'El celular debe tener al menos 10 digitos',
             'nit.required' => 'El nit es requerido',
+            'tamanoEmpresa.required' => 'La cantidad aproximada de empleados de la empresa es requerido',
             'nombreInmobiliaria.required' => 'El nombre de la inmobiliaria es requerido',
             'cargo.required' => 'El cargo es requerido',
             'preInicio1.required' => 'La respuesta frente a Objetivos de Transformación Digital es requerida',
@@ -91,6 +95,7 @@ class Wizard extends Component
             $usuarioConsultoria->objetivos_transformacion_digital = $this->preInicio1;
             $usuarioConsultoria->desafios_riesgos = $this->preInicio2;
             $usuarioConsultoria->experiencia_transformacion_digital = $this->preInicio3;
+            $usuarioConsultoria->tamano_empresa = $this->tamanoEmpresa;
             $usuarioConsultoria->save();
             $this->pregunta1 = preguntas::whereBetween('preguntaId',[1,5])->get();
             $this->currentStep = 1;

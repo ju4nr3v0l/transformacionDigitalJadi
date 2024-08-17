@@ -77,7 +77,7 @@ class GeneracionCopilotController extends Controller
     }
 
 
-    private function obtenerPreguntasSinRecomendacionCopilot($id_usuario)
+    public function obtenerPreguntasSinRecomendacionCopilot($id_usuario)
     {
         $respuestasUsuariosSinRecomentacion = RespuestasUsuarios::Where('usuarioFk', $id_usuario)->whereNull('recomendacion_copilot')->get();
 
@@ -85,7 +85,7 @@ class GeneracionCopilotController extends Controller
         return $respuestasUsuariosSinRecomentacion;
     }
 
-    private function generarRecomendacionYpromt($user,$consolidado,$dimension,$trheadId){
+    public function generarRecomendacionYpromt($user, $consolidado, $dimension, $trheadId){
 
         $respuesta = [];
         $openAi = new OpenAiService();
