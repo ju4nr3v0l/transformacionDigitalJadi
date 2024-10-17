@@ -23,7 +23,9 @@ class UsuariosConsultoria extends Model
         'desafios_riesgos',
         'experiencia_transformacion_digital',
         'resumen_ejecutivo',
-        'tamano_empresa'
+        'tamano_empresa',
+        'prioridades',
+        'formacion'
 
     ];
 

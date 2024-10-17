@@ -23,6 +23,7 @@ class RecomendacionPorDimensionModel extends Model
     ];
 
 
+
     public function usuarios(): BelongsTo
     {
         return $this->belongsTo(Usuarios::class, 'usuarioFk', 'usuarioConsultoriaId');

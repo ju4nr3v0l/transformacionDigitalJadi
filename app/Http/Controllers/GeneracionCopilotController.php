@@ -71,6 +71,14 @@ class GeneracionCopilotController extends Controller
             $preguntas->save();
         }
 
+        $prioridades = $this->generarPrioridades($threadId);
+        $user->prioridades = $prioridades;
+        $user->save();
+
+        $formacion = $this->generarFormacion($threadId);
+        $user->formacion = $formacion;
+        $user->save();
+
         //retornamos la finalizacion del proceso
         return response()->json(['message' => 'Recomendaciones generadas correctamente'], 200);
 
@@ -100,6 +108,81 @@ class GeneracionCopilotController extends Controller
         $respuesta['promt'] = $promt;
 
         $respuesta['recomendacion'] = $openAi->generateText($trheadId,$promt);
+        return $respuesta;
+    }
+
+    public function generarPrioridades($trheadId){
+        $openAi = new OpenAiService();
+        $promt = "De acuerdo a las recomendaciones generadas dame un plan con la siguiente estructura:
+        Horizonte a 3 meses, el top 3 de cosas más urgentes por atender de acuerdo a las principales expectativas y necesidades de la empresa.
+
+        Horizonte 1 año:
+El top 3 de cosas más importantes por atender de acuerdo a las principales expectativas y necesidades de la empresa, que no se hayan incluido en el horizonte 1.
+
+Horizonte 2 años:
+El top 5 de cosas más importantes por atender de acuerdo a las principales expectativas y necesidades de la empresa, que puedan dar una espera o requieran la estructuración de bases previas con los horizontes anteriores.
+en este plan, incluye iniciativas que garanticen la generación de valor desde el primer trimestre con recomendaciones que tengan un impacto fuerte para la organización. Prioriza primero lo que genera más impacto. Debes hacer esto en maximo 500 palabras";
+
+        $respuesta = $openAi->generateText($trheadId,$promt);
+        return $respuesta;
+    }
+
+    public function generarFormacion($trheadId){
+        $openAi = new OpenAiService();
+        $promt = "De acuerdo a las recomendaciones generadas dame un plan de formación con los principales temas en los que el gerente se debe enfocar en su formación para promover el cambio y la transformación digital según su realidad. los temas son:
+
+Módulo 1: Introducción a la Transformación Digital
+Objetivo: Proporcionar una visión integral de la transformación digital y su impacto en las organizaciones y la sociedad.
+Contenido:
+Conceptos fundamentales de la transformación digital.
+Tecnologías emergentes y su aplicación.
+Estrategias de transformación digital.
+Casos de estudio y análisis de empresas que han implementado la transformación digital.
+Desafíos y oportunidades.
+
+Módulo 2: Experiencia de Cliente
+Objetivo: Entender la importancia de la experiencia del cliente en el contexto digital y mejorar la interacción con los clientes.
+Contenido:
+Principios de UX (User Experience).
+Customer Journey Mapping.
+Personalización a través de datos, uso de CRM avanzados.
+Análisis de feedback en tiempo real.
+
+Módulo 3: Cultura Cambio y Agilidad Organizacional
+Objetivo: Reconocer la influencia de la cultura organizacional en la transformación digital.
+Contenido:
+Gestión del cambio en ambientes digitales.
+Desarrollo de equipos ágiles.
+Introducción a las metodologías ágiles (SCRUM y KANBAN).
+Herramientas para gestión de agilismo (Jira, Azure DevOps).
+Liderazgo digital.
+
+Módulo 4: Tecnologías Disruptivas y Arquitectura
+Objetivo: Reconocer la importancia de los datos en la toma de decisiones estratégicas y comprender cómo las decisiones arquitectónicas afectan la estrategia y operaciones.
+Contenido:
+Internet de las Cosas (IoT).
+Big Data y Analítica de Datos.
+Inteligencia Artificial y su aplicación en el sector inmobiliario.
+Blockchain, Realidad Aumentada y Realidad Virtual.
+Principios de arquitectura de TI.
+
+Módulo 5: Innovación e Implementación de la Transformación Digital
+Objetivo: Entender el rol de la innovación en la diferenciación y el crecimiento del negocio.
+Contenido:
+Innovación abierta y colaboración con startups.
+Prototipado rápido.
+Design Thinking.
+Casos de éxito y experiencias reales.
+
+Módulo 6: Evaluación y Medición del Impacto
+Objetivo: Evaluar y medir el impacto de la transformación digital en la organización.
+Contenido:
+KPIs y métricas para la evaluación.
+Herramientas de monitoreo y análisis.
+OKR y ajuste continuo de estrategias.
+
+Debes hacer esto en maximo 500 palabras.";
+        $respuesta = $openAi->generateText($trheadId,$promt);
         return $respuesta;
     }
 

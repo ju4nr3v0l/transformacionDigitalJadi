@@ -134,8 +134,10 @@ class GenerarReporteController extends Controller
         $diapositiva6 = $this->createDiapositiva6($diapositiva6);
         //Creamos diapositiva 7
         $diapositiva7 = $presentation->createSlide();
+        // Obtenemos promedios generales
+        $promedioGeneral = $this->ObtenerPromedioGeneral();
         // Seteamos el contenido de la diapositiva 7
-        $diapositiva7 = $this->createDiapositiva7($diapositiva7, 'Aca va el analisis del comparativo de cifras con el sector', $consolidado['data']['graficos']);
+        $diapositiva7 = $this->createDiapositiva7($diapositiva7, 'Comparativo de cifras con el sector', $consolidado['data']['graficos'],$promedioGeneral);
         // Creamos la diapositiva 8
         $diapositiva8 = $presentation->createSlide();
         // damos fondo a de titulo a la diapositiva 8
@@ -155,6 +157,13 @@ class GenerarReporteController extends Controller
                 $recomendacionSlide = $this->createDiapositivaRecomendaciones($recomendacionSlide, $dimension);
             }
         }
+
+        $dispositivaPrioridades = $presentation->createSlide();
+        $dispositivaPrioridades = $this->createDiapositivaPriorizacion($dispositivaPrioridades,str_replace( '*','',$usuario->prioridades));
+
+        $dispositivaEducacion = $presentation->createSlide();
+        $dispositivaEducacion = $this->createDiapositivaEducacion($dispositivaEducacion,str_replace( '*','',$usuario->formacion));
+
 
         $writer = IOFactory::createWriter($presentation, 'PowerPoint2007');
         header('Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation');
@@ -389,7 +398,7 @@ Nuestro objetivo es proporcionar un diagnóstico detallado que sirva como punto 
             ->setOffsetY(60);
         $shapeParagraph->getActiveParagraph()->getAlignment()->setHorizontal(\PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_JUSTIFY);
         $textRunparagraph = $shapeParagraph->createTextRun($parrafoTitulo);
-        $textRunparagraph->getFont()->setBold(false)->setSize(20)->setColor(new StyleColor(self::TEXT_COLOR));
+        $textRunparagraph->getFont()->setBold(false)->setSize(14)->setColor(new StyleColor(self::TEXT_COLOR));
 
         // Creamos la imagen del logo de Jadi SAS
         $shapelogo = new Drawing\File();
@@ -433,26 +442,53 @@ Nuestro objetivo es proporcionar un diagnóstico detallado que sirva como punto 
         return $diapositiva6;
     }
 
-    private function createDiapositiva7($diapositiva7,$parrafoTitulo,$dataGraficos){
+    private function createDiapositiva7($diapositiva7,$parrafoTitulo,$dataGraficos,$promedioGeneral){
 
         // Creamos shape para el grafico
         $radarChart = new Radar();
         $series = new Series('Valoración', $dataGraficos);
+        $seriesGeneral = new Series('Valoración General', $promedioGeneral);
+        $gridlines = new Gridlines();
+        $gridlines->getOutline()->setWidth(1);
+        $gridlines->getOutline()->getFill()->setFillType(Fill::FILL_SOLID)->setStartColor(new StyleColor(self::TEXT_COLOR));
         $series->setShowValue(false);
         $series->setShowSeriesName(false);
+        $series->setShowLeaderLines(true);
         $series->hasShowLeaderLines(true);
+        $series->hasShowSeparator(true);
+        $seriesGeneral->setShowValue(false);
+        $seriesGeneral->setShowSeriesName(false);
+        $seriesGeneral->setShowLeaderLines(true);
+        $seriesGeneral->hasShowLeaderLines(true);
+        $seriesGeneral->hasShowSeparator(true);
+        $marker = $series->getMarker();
+        $marker->setSymbol(Marker::SYMBOL_DASH)->setSize(4);
+        $marker->getFill()->setFillType(Fill::FILL_SOLID);
+        $marker2 = $seriesGeneral->getMarker();
+        $marker2->setSymbol(Marker::SYMBOL_DASH)->setSize(2);
+        $marker2->getFill()->setFillType(Fill::FILL_SOLID);
+
         $radarChart->addSeries($series);
+        $radarChart->addSeries($seriesGeneral);
         $shapeChart = $diapositiva7->createChartShape();
         $shapeChart->setName('Grafico')
             ->setResizeProportional(true)
-            ->setHeight(600)
-            ->setWidth(800)
+            ->setHeight(900)
+            ->setWidth(1400)
             ->setOffsetX(105)
-            ->setOffsetY(200);
-        $shapeChart->getTitle()->setText('Comparativo con el sector');
+            ->setOffsetY(100);
+        $shapeChart->getTitle()->setText('Resultado de la valoración de las dimensiones');
         $shapeChart->getPlotArea()->getAxisY()->setMinorUnit(1);
         $shapeChart->getPlotArea()->getAxisY()->setMajorUnit(3);
+        $shapeChart->getPlotArea()->getAxisX()->setMajorGridlines($gridlines);
+        $shapeChart->getPlotArea()->getAxisY()->setMajorGridlines($gridlines);
+        $shapeChart->getPlotArea()->getAxisY()->setMinorGridlines($gridlines);
+        $shapeChart->getPlotArea()->getAxisx()->setMinorGridlines($gridlines);
+//        $shapeChart->getPlotArea()->getAxisx()->set($gridlines);
+
         $shapeChart->getPlotArea()->setType($radarChart);
+
+
 
         // Creamos barra de titulo y texto
         $shapeTitleBlue = new Drawing\File();
@@ -634,5 +670,159 @@ Nuestro objetivo es proporcionar un diagnóstico detallado que sirva como punto 
         $recomendacionSlide->addShape($shapelogo);
 
         return $recomendacionSlide;
+    }
+
+    private function createDiapositivaPriorizacion($diapositivaPriorizacion, $prioridades){
+        // Creamos barra de titulo y texto
+        $shapeTitleBlue = new Drawing\File();
+        $shapeTitleBlue->setName('Image File')
+            ->setDescription('Image File')
+            ->setPath(resource_path() .'/reportImages/backgroundTittleBlue2.png')
+            ->setWidthAndHeight(881,60)
+            ->setResizeProportional(true)
+            ->setOffsetX(0)
+            ->setOffsetY(63);
+        //agregamos texto dentro de la forma
+        $diapositivaPriorizacion->addShape($shapeTitleBlue);
+        $shapeTitle = $diapositivaPriorizacion->createRichTextShape()
+            ->setWidthAndHeight(759,33)
+            ->setOffsetX(74)
+            ->setOffsetY(60);
+        $shapeTitle->getActiveParagraph()->getAlignment()->setHorizontal(\PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_CENTER);
+        $textRun = $shapeTitle->createTextRun('Conclusiones');
+        $textRun->getFont()->setBold(false)->setSize(32)->setColor(new StyleColor(StyleColor::COLOR_WHITE));
+        //creamos el parrafo del titulo
+
+        $shapeParagraph = $diapositivaPriorizacion->createRichTextShape()
+            ->setHeight(460)
+            ->setWidth(1550)
+            ->setOffsetX(74)
+            ->setOffsetY(230);
+        $shapeParagraph->getActiveParagraph()->getAlignment()->setHorizontal(\PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_LEFT);
+        $textRunparagraph = $shapeParagraph->createTextRun($prioridades);
+        $textRunparagraph->getFont()->setBold(false)->setSize(12)->setColor(new StyleColor(self::TEXT_COLOR));
+
+        // Creamos la imagen del logo de Jadi SAS
+        $shapelogo = new Drawing\File();
+        $shapelogo->setName('Image File')
+            ->setDescription('Image File')
+            ->setPath(resource_path() .'/reportImages/logoFooterDiapositivaBlanca.png')
+            ->setOffsetX(1690)
+            ->setOffsetY(930)
+            ->setWidthAndHeight(155,77)
+            ->setResizeProportional(true);
+
+        $diapositivaPriorizacion->addShape($shapelogo);
+
+        return $diapositivaPriorizacion;
+
+
+    }
+
+    private function createDiapositivaEducacion($diapositivaEducacion, $formacion){
+        // Creamos barra de titulo y texto
+        $shapeTitleBlue = new Drawing\File();
+        $shapeTitleBlue->setName('Image File')
+            ->setDescription('Image File')
+            ->setPath(resource_path() .'/reportImages/backgroundTittleBlue2.png')
+            ->setWidthAndHeight(881,60)
+            ->setResizeProportional(true)
+            ->setOffsetX(0)
+            ->setOffsetY(63);
+        //agregamos texto dentro de la forma
+        $diapositivaEducacion->addShape($shapeTitleBlue);
+        $shapeTitle = $diapositivaEducacion->createRichTextShape()
+            ->setWidthAndHeight(759,33)
+            ->setOffsetX(74)
+            ->setOffsetY(60);
+        $shapeTitle->getActiveParagraph()->getAlignment()->setHorizontal(\PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_CENTER);
+        $textRun = $shapeTitle->createTextRun('Recomendaciones Educativas');
+        $textRun->getFont()->setBold(false)->setSize(32)->setColor(new StyleColor(StyleColor::COLOR_WHITE));
+        //creamos el parrafo del titulo
+
+        $shapeParagraph = $diapositivaEducacion->createRichTextShape()
+            ->setHeight(460)
+            ->setWidth(1550)
+            ->setOffsetX(74)
+            ->setOffsetY(230);
+        $shapeParagraph->getActiveParagraph()->getAlignment()->setHorizontal(\PhpOffice\PhpPresentation\Style\Alignment::HORIZONTAL_LEFT);
+        $textRunparagraph = $shapeParagraph->createTextRun($formacion);
+        $textRunparagraph->getFont()->setBold(false)->setSize(14)->setColor(new StyleColor(self::TEXT_COLOR));
+
+        // Creamos la imagen del logo de Jadi SAS
+        $shapelogo = new Drawing\File();
+        $shapelogo->setName('Image File')
+            ->setDescription('Image File')
+            ->setPath(resource_path() .'/reportImages/logoFooterDiapositivaBlanca.png')
+            ->setOffsetX(1690)
+            ->setOffsetY(930)
+            ->setWidthAndHeight(155,77)
+            ->setResizeProportional(true);
+
+        $diapositivaEducacion->addShape($shapelogo);
+
+        return $diapositivaEducacion;
+
+
+    }
+
+    private function ObtenerPromedioGeneral(){
+        $respuestasUsuarios = $this->obtenerPreguntasConRecomendacionParaPromedioGeneral();
+        $dimensiones = [
+            "Estrategia Digital",
+            "Experiencia de Cliente",
+            "Personas y Cultura",
+            "Operaciones y Procesos",
+            "Tecnología y Arquitectura",
+            "Innovación",
+            "Agilidad Organizacional",
+            "Medición y Analítica"
+        ];
+
+        $promedios = [];
+
+        foreach ($dimensiones as $dimension) {
+
+            $totalValor = 0;
+            $contador = 0;
+
+            foreach ($respuestasUsuarios as $respuesta) {
+                if ($respuesta['dimension'] === $dimension) {
+                    $totalValor += $respuesta['valor'];
+                    $contador++;
+
+                }
+            }
+
+            if ($contador > 0) {
+                $promedios[$dimension] = $totalValor / $contador;
+            } else {
+                $promedios[$dimension] = 0;
+            }
+
+
+        }
+
+
+        return $promedios;
+
+
+    }
+
+
+
+    private function obtenerPreguntasConRecomendacionParaPromedioGeneral()
+    {
+        $respuestasUsuariosSinRecomentacion = RespuestasUsuarios::whereNotNull('recomendacion_copilot')
+            ->join('respuestas_preguntas', 'respuestas_preguntas.respuestaId', '=', 'respuestas_usuarios.respuestaFk')
+            ->join('preguntas', 'preguntas.preguntaId', '=', 'respuestas_preguntas.preguntaFk')
+            ->join('capacidades', 'capacidades.capacidadId', '=', 'preguntas.capacidadFk')
+            ->join('dimensiones', 'dimensiones.dimensionId', '=', 'capacidades.dimensionFk')
+            ->select('respuestas_preguntas.peso as valor',  'dimensiones.nombre as dimension')
+            ->get();
+
+
+        return $respuestasUsuariosSinRecomentacion;
+
     }
 }
